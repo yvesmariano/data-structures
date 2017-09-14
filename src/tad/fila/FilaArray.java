@@ -9,7 +9,7 @@ public class FilaArray implements IFila {
     
     public FilaArray(int tamanho, int incremento) {
         this.fila = new Object[tamanho];
-        this.incremento = incremento;
+        this.incremento = incremento < 0 ? 0 : incremento;
     }
     
     public FilaArray(int tamanho) {
