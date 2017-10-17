@@ -36,10 +36,11 @@ public class FilaLista implements IFila {
         if(estaVazia())
             throw new EFilaVazia();
         
-        Object desenfileirado = inicio.valor;
-        inicio = inicio.anterior;
+        No desenfileirado = inicio;
+        inicio = desenfileirado.anterior;
+        desenfileirado.anterior = null;
         tamanho--;
-        return desenfileirado;
+        return desenfileirado.valor;
     }
 
     @Override

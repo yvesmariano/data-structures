@@ -24,10 +24,11 @@ public class PilhaLista implements IPilha {
         if(estaVazia())
             throw new EPilhaVazia();
         
-        Object desempilhado = topo.valor;
-        topo = topo.anterior;
+        No desempilhado = topo;
+        topo = desempilhado.anterior;
+        desempilhado.anterior = null;
         tamanho--;
-        return desempilhado;
+        return desempilhado.valor;
     }
     
     @Override
