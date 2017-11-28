@@ -9,12 +9,12 @@ import tad.arvore.IArvore;
 public interface IArvoreGenerica extends IArvore
 {
 	
-	public void addChild(No v, Object o);
+	public void addChild(NoArvore v, Object o);
 	
 	/**
 	 * @param v
 	 * @return Objeto que estava na posicao que foi removida
 	 * @throws InvalidNoException
 	 */
-	public Object remove(No v) throws InvalidNoException;
+	public Object remove(NoArvore v) throws InvalidNoException;
 }

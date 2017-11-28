@@ -6,62 +6,62 @@ import java.util.ArrayList;
 public class ArvoreSimples implements IArvoreGenerica
 {
     //Atributos da �rvore
-    private No raiz;
+    private NoArvore raiz;
     private int tamanho;
 
     public ArvoreSimples(Object o)
     {
-        raiz = new No(null, o);
+        raiz = new NoArvore(null, o);
         tamanho = 1;
     }
     
     @Override
-    public No root()
+    public NoArvore root()
     {
         return raiz;
     }
     
     @Override
-    public No parent(No v)
+    public NoArvore parent(NoArvore v)
     {
         return (v.parent());
     }
 
     @Override
-    public Iterator children(No v)
+    public Iterator children(NoArvore v)
     {
         return v.children();
     }
     
     @Override
-    public boolean isInternal(No v)
+    public boolean isInternal(NoArvore v)
     {
         return (v.childrenNumber() > 0);
     }
     
     @Override
-    public boolean isExternal(No v)
+    public boolean isExternal(NoArvore v)
     {
         return (v.childrenNumber() == 0);
     }
     
-    public boolean isRoot(No v)
+    public boolean isRoot(NoArvore v)
     {
         return v == raiz;
     }
     
     @Override
-    public void addChild(No v, Object o)
+    public void addChild(NoArvore v, Object o)
     {
-        No novo = new No(v, o);
+        NoArvore novo = new NoArvore(v, o);
         v.addChild(novo);
         tamanho++;
     }
     
     @Override
-    public Object remove(No v) throws InvalidNoException
+    public Object remove(NoArvore v) throws InvalidNoException
     {
-        No pai = v.parent();
+        NoArvore pai = v.parent();
         if (pai != null || isExternal(v))
                 pai.removeChild(v);
         else
@@ -78,7 +78,7 @@ public class ArvoreSimples implements IArvoreGenerica
     }
     
     @Override
-    public int depth(No v)
+    public int depth(NoArvore v)
     {
         if (v == raiz)
                 return 0;
@@ -92,12 +92,12 @@ public class ArvoreSimples implements IArvoreGenerica
         return tamanho;
     }
     
-    public void swap(No v, No w)
+    public void swap(NoArvore v, NoArvore w)
     {
         v.parent().removeChild(v);
         w.parent().removeChild(w);
         
-        No pai = v.parent();
+        NoArvore pai = v.parent();
         v.parent(w.parent());
         w.parent(pai);
         
@@ -111,13 +111,13 @@ public class ArvoreSimples implements IArvoreGenerica
         return height(raiz);
     }
     
-    private int height(No v)
+    private int height(NoArvore v)
     {
         if (isExternal(v))
             return 0;
         
         int height = 0;
-        Iterator<No> iterator = this.children(v);
+        Iterator<NoArvore> iterator = this.children(v);
         while (iterator.hasNext()) {
             height = Math.max(height, this.height(iterator.next()));
         }
@@ -130,11 +130,11 @@ public class ArvoreSimples implements IArvoreGenerica
         return this.nos(raiz).iterator();
     }
     
-    private ArrayList nos(No v)
+    private ArrayList nos(NoArvore v)
     {
         ArrayList arr = new ArrayList();
         arr.add(v);
-        Iterator<No> iterator = this.children(v);
+        Iterator<NoArvore> iterator = this.children(v);
         while (iterator.hasNext()) {            
             arr.addAll(this.nos(iterator.next()));
         }
@@ -145,7 +145,7 @@ public class ArvoreSimples implements IArvoreGenerica
     public Iterator elements()
     {
         ArrayList arr = new ArrayList();
-        Iterator<No> iterator = this.nos();
+        Iterator<NoArvore> iterator = this.nos();
         while (iterator.hasNext()) {
             arr.add(iterator.next().element());
         }
@@ -153,7 +153,7 @@ public class ArvoreSimples implements IArvoreGenerica
     }
     
     @Override
-    public Object replace(No v, Object o)
+    public Object replace(NoArvore v, Object o)
     {
         Object velho = v.element();
         v.setElement(o);

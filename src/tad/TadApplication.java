@@ -1,19 +1,36 @@
 package tad;
 
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tad.arvore.*;
 import tad.pilha.*;
 import tad.fila.*;
+import tad.hashtable.*;
+import tad.arvorebinariapesquisa.*;
 
 public class TadApplication {
     
     public static void main(String[] args) {
         testarArvore();
+//        try {
+//            testarHashtable();
+//        } catch (HashTableCheiaException ex) {
+//            Logger.getLogger(TadApplication.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }
+    
+    public static void testarHashtable() throws HashTableCheiaException {
+        Hashtable h = new Hashtable();
+        h.inserir(18, "Yves");
+        h.inserir(41, "Herikle");
+        h.inserir(22, "Robinson");
+        System.out.println(h);
     }
     
     public static void testarArvore() {
         ArvoreSimples arvore = new ArvoreSimples("a");
-        No r = arvore.root();
+        NoArvore r = arvore.root();
         arvore.addChild(r, "b");
         arvore.addChild(r, "c");
         mostrarArvore(arvore);
@@ -25,13 +42,13 @@ public class TadApplication {
         mostrarSubArvore(a.root(), 2, 0);
     }
     
-    public static void mostrarSubArvore(No no, int indent, int level)
+    public static void mostrarSubArvore(NoArvore no, int indent, int level)
     {
         for (int i = 0; i < indent * level; i++) {
             System.out.print(" ");
         }
         System.out.println(no.element());
-        Iterator<No> iterator = no.children();
+        Iterator<NoArvore> iterator = no.children();
         while(iterator.hasNext())
             mostrarSubArvore(iterator.next(), indent, level + 1);
     }

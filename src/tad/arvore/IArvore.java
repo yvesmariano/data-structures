@@ -20,24 +20,24 @@ public interface IArvore
 
 	/* M�todos de acesso*/
 	/** Retorna a raiz da �rvore */
-	public No root();
+	public NoArvore root();
 	/** Retorna o n� pai de um n� */
-	public No parent(No v);
+	public NoArvore parent(NoArvore v);
 	/** Retorna os filhos de um n� */
-	public Iterator children(No v);
+	public Iterator children(NoArvore v);
 
 	/* M�todos de consulta */
 	/** Testa se um n� � interno */
-	public boolean isInternal(No v);
+	public boolean isInternal(NoArvore v);
 	/** Testa se um n� � externo*/
-	public boolean isExternal(No v);
+	public boolean isExternal(NoArvore v);
 	/** Testa se um n� � a raiz */
-	public boolean isRoot(No v);
+	public boolean isRoot(NoArvore v);
 	/** Retorna a profundidade de um n� */
-	public int depth(No v);
+	public int depth(NoArvore v);
 
 	/* M�todos de atualiza��o */
 	/** Substitui o objeto de um um n� */
-	public Object replace(No v, Object o);
+	public Object replace(NoArvore v, Object o);
 	/** Retorna a profundidade de um n� */
 }

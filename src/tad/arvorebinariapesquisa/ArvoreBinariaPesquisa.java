@@ -5,11 +5,11 @@ import java.util.Iterator;
 
 public class ArvoreBinariaPesquisa {
     private int tamanho;
-    private No raiz;
+    private NoABP raiz;
 
     public ArvoreBinariaPesquisa(Object k, Object o) {
         tamanho = 1;
-        raiz = new No(k, o);
+        raiz = new NoABP(k, o);
     }
     
     public int tamanho() {
@@ -24,7 +24,7 @@ public class ArvoreBinariaPesquisa {
         return this.altura(this.raiz);
     }
     
-    private int altura(No n) {
+    private int altura(NoABP n) {
         if (this.eNoExterno(n)) {
             return 0;
         }
@@ -38,9 +38,9 @@ public class ArvoreBinariaPesquisa {
         return 1 + h;
     }
     
-    public Iterator elements() {
+    public Iterator elementos() {
         ArrayList v = new ArrayList();
-        for (Iterator<No> it = this.nos(); it.hasNext();) {
+        for (Iterator<NoABP> it = this.nos(); it.hasNext();) {
             v.add(it.next().getElemento());
         }
         return v.iterator();
@@ -50,7 +50,7 @@ public class ArvoreBinariaPesquisa {
         return this.nos(this.raiz).iterator();
     }
     
-    private ArrayList nos(No n) {
+    private ArrayList nos(NoABP n) {
         ArrayList v = new ArrayList();
         v.add(n);
         if (this.temFilhoEsquerdo(n)) {
@@ -62,42 +62,42 @@ public class ArvoreBinariaPesquisa {
         return v;
     }
     
-    public No raiz() {
+    public NoABP raiz() {
         return this.raiz;
     }
     
-    public boolean eNoInterno(No n) {
+    public boolean eNoInterno(NoABP n) {
         return (this.temFilhoEsquerdo(n) || this.temFilhoDireito(n));
     }
     
-    public boolean eNoExterno(No n) {
+    public boolean eNoExterno(NoABP n) {
         return (!this.temFilhoEsquerdo(n) && !this.temFilhoDireito(n));
     }
     
-    public boolean eRaiz(No n) {
+    public boolean eRaiz(NoABP n) {
         return (n == this.raiz);
     }
     
-    public int profundidade(No n) {
+    public int profundidade(NoABP n) {
         if (n == this.raiz) {
             return 0;
         }
         return 1 + this.profundidade(n.getPai());
     }
     
-    public boolean temFilhoEsquerdo(No n) {
+    public boolean temFilhoEsquerdo(NoABP n) {
         return (n.getFilhoEsquerdo() != null);
     }
     
-    public boolean temFilhoDireito(No n) {
+    public boolean temFilhoDireito(NoABP n) {
         return (n.getFilhoDireito() != null);
     }
     
-    public No encontrar(Object chave) {
+    public NoABP encontrar(Object chave) {
         return encontrar(chave, this.raiz());
     }
 
-    private No encontrar(Object chave, No n) {
+    private NoABP encontrar(Object chave, NoABP n) {
         if (this.eNoExterno(n)) {
             return n;
         }
@@ -109,11 +109,11 @@ public class ArvoreBinariaPesquisa {
         return n;
     }
     
-    public void insert(Object chave, Object o) {
-        No p = this.encontrar(chave);
+    public void inserir(Object chave, Object o) {
+        NoABP p = this.encontrar(chave);
 
         if ((int) p.getChave() != (int) chave) {
-            No n = new No(chave, o, p);
+            NoABP n = new NoABP(chave, o, p);
             if ((int) p.getChave() > (int) chave) {
                 p.setFilhoEsquerdo(n);
             } else {
@@ -125,18 +125,18 @@ public class ArvoreBinariaPesquisa {
     }
     
     public Object remover(Object chave) {
-        No n = this.encontrar(chave);
+        NoABP n = this.encontrar(chave);
         return this.remover(n);
     }
 
-    private Object remover(No n) {
+    private Object remover(NoABP n) {
         Object o = n.getElemento();
 
         if (this.eNoInterno(n)) {
-            No m;
+            NoABP m;
 
             if (this.temFilhoDireito(n)) {
-                m = (No) traverse(n.getFilhoDireito()).next();
+                m = (NoABP) ArvoreBinariaPesquisa.this.inOrder(n.getFilhoDireito()).next();
 
                 n.setChave(m.getChave());
                 n.setElemento(m.getElemento());
@@ -166,23 +166,23 @@ public class ArvoreBinariaPesquisa {
         return o;
     }
 
-    public Iterator traverse() {
-        return this.traverse(this.raiz);
+    public Iterator inOrder() {
+        return this.inOrder(this.raiz);
     }
 
-    public Iterator traverse(No n) {
+    public Iterator inOrder(NoABP n) {
         ArrayList v = new ArrayList();
-        this.traverse(n, v);
+        this.inOrder(n, v);
         return v.iterator();
     }
 
-    private void traverse(No n, ArrayList v) {
+    private void inOrder(NoABP n, ArrayList v) {
         if (this.temFilhoEsquerdo(n)) {
-            traverse(n.getFilhoEsquerdo(), v);
+            inOrder(n.getFilhoEsquerdo(), v);
         }
         v.add(n);
         if (this.temFilhoDireito(n)) {
-            traverse(n.getFilhoDireito(), v);
+            inOrder(n.getFilhoDireito(), v);
         }
     }
 }
